@@ -1,7 +1,5 @@
 # Notification.Avalonia
 
-Port of ![this](https://github.com/Enterwell/Wpf.Notifications) repo
-
 ---
 To start you should install NuGet package 
 >   Install-Package Notification.Avalonia
@@ -10,9 +8,7 @@ To start you should install NuGet package
 or download https://www.nuget.org/packages/Notification.Avalonia/ repo.
 
 ---
-
-![](https://github.com/AvaloniaCommunity/Avalonia.Notification/blob/master/Images/Avalonia.Notification.gif)
-
+![image](https://github.com/GamerVII-NET/GamerVII.Notification.Avalonia/assets/111225722/a99d814f-a8c8-46d9-93cd-99fd066695bc)
 ---
 
 For use:

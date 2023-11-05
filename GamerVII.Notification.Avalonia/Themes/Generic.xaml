@@ -1,14 +1,25 @@
 ﻿<Styles
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:cc="clr-namespace:Avalonia.Notification.Controls"
-    xmlns:notification="clr-namespace:Avalonia.Notification">
+    xmlns:cc="clr-namespace:GamerVII.Notification.Avalonia.Controls"
+    xmlns:avalonia="clr-namespace:GamerVII.Notification.Avalonia">
     <Styles.Resources>
         <SolidColorBrush x:Key="NotificationButtonDarkBackgroundOverlayBrush">#333333</SolidColorBrush>
         <SolidColorBrush x:Key="NotificationButtonDarkBackgroundOverlayPressedBrush">#666666</SolidColorBrush>
         <SolidColorBrush x:Key="NotificationButtonDarkBackgroundOverlayDisabledBrush">#FFFFFF</SolidColorBrush>
     </Styles.Resources>
 
+    <Design.PreviewWith>
+        <Border Padding="20" Background="White">
+
+            <cc:NotificationMessageContainer>
+
+                <cc:NotificationMessage Header="Заголовок"
+                                        Background="#151515"
+                                        Message="Сообщение" />
+            </cc:NotificationMessageContainer>
+        </Border>
+    </Design.PreviewWith>
 
     <Style Selector="TextBlock.notificationMessage">
         <Setter Property="FontSize" Value="11" />
@@ -21,15 +32,23 @@
     </Style>
 
     <Style Selector="ContentControl.notificationAdditionalContentOverBadgeStyle">
-        <Setter Property="Margin" Value="10,2,0,2" />
         <Setter Property="Padding" Value="4,2" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
+    <Style Selector="Button.CloseButtonStyle">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <Style Selector="Button.CloseButtonStyle /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
     <Style Selector="TextBlock.notificationHeaderTextStyle">
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground"
                 Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type cc:NotificationMessage}}, Path=Foreground}" />
         <Setter Property="Margin" Value="0,0,8,0" />
@@ -41,7 +60,8 @@
     <Style Selector="TextBlock.notificationMessageTextStyle">
         <Setter Property="Foreground"
                 Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type cc:NotificationMessage}}, Path=Foreground}" />
-        <Setter Property="Margin" Value="0,0,8,0" />
+        <Setter Property="Margin" Value="0,5,8,0" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -49,6 +69,7 @@
 
 
     <Style Selector="cc|NotificationMessage">
+        <Setter Property="CornerRadius" Value="10" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type cc:NotificationMessage}">
@@ -59,10 +80,12 @@
                         Classes.dismiss="{TemplateBinding DismissAnimation}"
                         MinHeight="35"
                         VerticalAlignment="Top"
+                        CornerRadius="{TemplateBinding CornerRadius}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="#882F2F2F"
+                        Padding="10"
+                        MaxWidth="450"
                         BorderThickness="0,0,0,1"
-
                         UseLayoutRounding="True">
                         <!--  Outer Grid  -->
                         <Grid x:Name="outerGrid">
@@ -117,16 +140,19 @@
                                 <!--  Accent Badge Style  -->
                                 <Style
 
-                                    Selector="TextBlock.notificationBadgeAccentStyle">
+                                    Selector="Border.notificationBadgeAccentStyle">
                                     <Setter Property="Background"
                                             Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type cc:NotificationMessage}}, Path=BadgeAccentBrush}" />
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                    <Setter Property="Padding" Value="10,5" />
+                                    <Setter Property="CornerRadius" Value="7" />
+                                </Style>
+                                <Style
+
+                                    Selector="TextBlock.notificationBadgeTextAccentStyle">
                                     <Setter Property="FontSize" Value="11" />
                                     <Setter Property="FontWeight" Value="Bold" />
                                     <Setter Property="Foreground" Value="White" />
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                    <Setter Property="Margin" Value="10,2,0,2" />
-                                    <Setter Property="Padding" Value="4,2" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
                                 </Style>
                             </Grid.Styles>
                             <Grid.ColumnDefinitions>
@@ -186,81 +212,75 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <!--  Badge Grid  -->
-                                <Grid
-                                    x:Name="badgeGrid"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <!--  Additional Content - Over Badge  -->
-                                    <ContentControl
-                                        x:Name="additionalContentOverBadge"
-                                        Grid.Row="1"
-                                        Content="{TemplateBinding AdditionalContentOverBadge}"
-                                        Classes="notificationAdditionalContentOverBadgeStyle" />
-                                    <!--  Badge  -->
-                                    <TextBlock
-                                        Grid.Row="2"
-                                        Classes="notificationBadgeAccentStyle"
-                                        Text="{TemplateBinding BadgeText}"
-                                        IsVisible="{TemplateBinding BadgeVisibility}" />
-                                </Grid>
+                                VerticalAlignment="Stretch" ColumnDefinitions="Auto,*">
                                 <!--  Text Grid  -->
                                 <Grid
                                     x:Name="textGrid"
                                     Grid.Column="1"
                                     Margin="10,8"
                                     HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <!--  Header and Message  -->
-                                    <TextBlock
-                                        x:Name="headerTextBlock"
-                                        Grid.Row="0"
-                                        Classes=" notificationHeaderTextStyle"
-                                        Text="{TemplateBinding Header}"
-                                        IsVisible="{TemplateBinding HeaderVisibility}" />
-                                    <TextBlock
-                                        x:Name="messageTextBlock"
-                                        Grid.Row="1"
-                                        Classes=" notificationMessageTextStyle"
-                                        Text="{TemplateBinding Message}"
-                                        IsVisible="{TemplateBinding MessageVisibility}" />
+                                    VerticalAlignment="Stretch" RowDefinitions="Auto,*">
+                                    <StackPanel Spacing="10">
+                                        <StackPanel Spacing="2">
+                                            <!--  Badge Grid  -->
+                                            <Grid
+                                                x:Name="badgeGrid"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <!--  Additional Content - Over Badge  -->
+                                                <ContentControl
+                                                    x:Name="additionalContentOverBadge"
+                                                    Grid.Row="1"
+                                                    Content="{TemplateBinding AdditionalContentOverBadge}"
+                                                    Classes="notificationAdditionalContentOverBadgeStyle" />
+                                                <!--  Badge  -->
+                                                <Border
+                                                    Grid.Row="0"
+                                                    IsVisible="{TemplateBinding BadgeVisibility}"
+                                                    Classes="notificationBadgeAccentStyle">
+                                                    <TextBlock
+                                                        Text="{TemplateBinding BadgeText}" />
+                                                </Border>
+                                            </Grid>
+                                            <TextBlock
+                                                x:Name="headerTextBlock"
+                                                Classes="notificationHeaderTextStyle"
+                                                Text="{TemplateBinding Header}"
+                                                IsVisible="{TemplateBinding HeaderVisibility}" />
+                                            <TextBlock
+                                                x:Name="messageTextBlock"
+                                                Classes=" notificationMessageTextStyle"
+                                                Opacity=".56"
+                                                LineHeight="24"
+                                                Text="{TemplateBinding Message}"
+                                                IsVisible="{TemplateBinding MessageVisibility}" />
+                                        </StackPanel>
+                                        <ItemsControl
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            IsVisible="{TemplateBinding ButtonsVisibility}"
+                                            ItemsSource="{TemplateBinding Buttons}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="10" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="avalonia:INotificationMessageButton">
+                                                    <Button Content="{Binding Content}"
+                                                            IsEnabled="{Binding IsEnabled}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                 </Grid>
                             </Grid>
-
-                            <!--  Buttons  -->
-                            <ItemsControl
-                                Grid.Row="1"
-                                Grid.Column="2"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                ItemsSource="{TemplateBinding Buttons}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="notification:INotificationMessageButton">
-                                        <Button Content="{Binding Content}" IsEnabled="{Binding IsEnabled}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
 
                             <!--  Overlay Content  -->
                             <ContentControl
@@ -272,6 +292,16 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 Content="{TemplateBinding OverlayContent}" />
+
+
+                            <Button Grid.Row="1"
+                                    Grid.Column="3"
+                                    Command="{TemplateBinding CloseCommand}"
+                                    CommandParameter="{TemplateBinding }"
+                                    Classes="CloseButtonStyle"
+                                    VerticalAlignment="Top">
+                                <Svg Path="../Resources/close.svg"></Svg>
+                            </Button>
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -284,7 +314,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" />
+                    <StackPanel Spacing="10" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -292,17 +322,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type cc:NotificationMessageContainer}">
                     <Grid>
-
-                        <Border BoxShadow="8 8 1 #99000000"
-                                x:Name="ItemsBorder"
+                        <Border x:Name="ItemsBorder"
                                 Margin="12,0,12,12"
-                                Padding="{TemplateBinding Padding}"
+                                Padding="30,30,30,30"
                                 Background="{TemplateBinding Background}"
                                 UseLayoutRounding="True">
-
-                            <ItemsPresenter>
-
-                            </ItemsPresenter>
+                            <ItemsPresenter />
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -310,6 +335,7 @@
         </Setter>
         <Setter Property="VerticalAlignment" Value="Top" />
     </Style>
+
     <Style Selector="Border.start">
         <Style.Animations>
             <Animation Duration="0:0:0:0.5">
@@ -321,8 +347,8 @@
                 </KeyFrame>
             </Animation>
         </Style.Animations>
-
     </Style>
+
     <Style Selector="Border.dismiss">
         <Style.Animations>
             <Animation Duration="0:0:0:0.5">

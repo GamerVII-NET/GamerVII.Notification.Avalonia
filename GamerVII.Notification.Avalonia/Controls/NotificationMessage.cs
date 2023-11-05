@@ -1,13 +1,15 @@
 ﻿using System.Collections.ObjectModel;
-using Avalonia.Animation;
+using System.ComponentModel.Design;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Templates;
 using Avalonia.Media;
 using Avalonia.Reactive;
-using Avalonia.Styling;
 
-namespace Avalonia.Notification.Controls;
+namespace GamerVII.Notification.Avalonia.Controls;
 
 /// <summary>
 /// The notification message control.
@@ -16,6 +18,7 @@ namespace Avalonia.Notification.Controls;
 /// <seealso cref="Control" />
 public class NotificationMessage : TemplatedControl, INotificationMessage, INotificationAnimation
 {
+
     /// <summary>
     /// Gets or sets the content of the overlay.
     /// </summary>
@@ -133,7 +136,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </value>
     public bool BadgeVisibility
     {
-        get => (bool)GetValue(BadgeVisibilityProperty);
+        get => GetValue(BadgeVisibilityProperty);
         set => SetValue(BadgeVisibilityProperty, value);
     }
 
@@ -157,7 +160,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </value>
     public string BadgeText
     {
-        get => (string)GetValue(BadgeTextProperty);
+        get => GetValue(BadgeTextProperty);
         set => SetValue(BadgeTextProperty, value);
     }
 
@@ -169,7 +172,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </value>
     public bool HeaderVisibility
     {
-        get => (bool)GetValue(HeaderVisibilityProperty);
+        get => GetValue(HeaderVisibilityProperty);
         set => SetValue(HeaderVisibilityProperty, value);
     }
 
@@ -181,7 +184,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </value>
     public string Header
     {
-        get => (string)GetValue(HeaderProperty);
+        get => GetValue(HeaderProperty);
         set => SetValue(HeaderProperty, value);
     }
 
@@ -193,8 +196,20 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </value>
     public bool MessageVisibility
     {
-        get => (bool)GetValue(MessageVisibilityProperty);
+        get => GetValue(MessageVisibilityProperty);
         set => SetValue(MessageVisibilityProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the buttons visibility.
+    /// </summary>
+    /// <value>
+    /// The buttons visibility.
+    /// </value>
+    public bool ButtonsVisibility
+    {
+        get => GetValue(ButtonsVisibilityProperty);
+        set => SetValue(ButtonsVisibilityProperty, value);
     }
 
     /// <summary>
@@ -205,7 +220,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </value>
     public string Message
     {
-        get => (string)GetValue(MessageProperty);
+        get => GetValue(MessageProperty);
         set => SetValue(MessageProperty, value);
     }
 
@@ -217,7 +232,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </value>
     public ObservableCollection<object> Buttons
     {
-        get => (ObservableCollection<object>)GetValue(ButtonsProperty);
+        get => GetValue(ButtonsProperty);
         set => SetValue(ButtonsProperty, value);
     }
 
@@ -229,7 +244,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </value>
     public bool Animates
     {
-        get => (bool)GetValue(AnimatesProperty);
+        get => GetValue(AnimatesProperty);
         set => SetValue(AnimatesProperty, value);
     }
 
@@ -251,6 +266,23 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     {
         get => GetValue(DismissAnimationProperty);
         set => SetValue(DismissAnimationProperty, value);
+    }
+
+    public static readonly StyledProperty<ICommand> CloseCommandProperty =
+        AvaloniaProperty.Register<NotificationMessage, ICommand>(nameof(CloseCommand), new CloseCommand(CloseNotification));
+
+    private static void CloseNotification(object parameter)
+    {
+        if (parameter is NotificationMessage message)
+        {
+            message.IsVisible = false;
+        }
+    }
+
+    public ICommand CloseCommand
+    {
+        get => GetValue(CloseCommandProperty);
+        set => SetValue(CloseCommandProperty, value);
     }
 
 
@@ -323,22 +355,18 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// Accents the brush property changed callback.
     /// </summary>
     /// <param name="dependencyObject">The dependency object.</param>
-    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="dependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
     private static void AccentBrushPropertyChangedCallback(AvaloniaObject dependencyObject,
         AvaloniaPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
-        if (!(dependencyObject is NotificationMessage @this))
+        if (dependencyObject is not NotificationMessage @this)
             throw new NullReferenceException("Dependency object is not of valid type " + nameof(NotificationMessage));
 
-        if (@this.BadgeAccentBrush == null)
-        {
-            @this.BadgeAccentBrush = dependencyPropertyChangedEventArgs.NewValue as IBrush;
-        }
+        @this.BadgeAccentBrush ??= dependencyPropertyChangedEventArgs.NewValue as IBrush
+                                   ?? throw new InvalidOperationException();
 
-        if (@this.ButtonAccentBrush == null)
-        {
-            @this.ButtonAccentBrush = dependencyPropertyChangedEventArgs.NewValue as IBrush;
-        }
+        @this.ButtonAccentBrush ??= dependencyPropertyChangedEventArgs.NewValue as IBrush
+                                    ?? throw new InvalidOperationException();
     }
 
     /// <summary>
@@ -369,16 +397,14 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// Badges the text property changed callback.
     /// </summary>
     /// <param name="dependencyObject">The dependency object.</param>
-    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="dependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
     private static void BadgeTextPropertyChangedCallback(AvaloniaObject dependencyObject,
         AvaloniaPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
-        if (!(dependencyObject is NotificationMessage @this))
+        if (dependencyObject is not NotificationMessage @this)
             throw new NullReferenceException("Dependency object is not of valid type " + nameof(NotificationMessage));
 
-        @this.BadgeVisibility = dependencyPropertyChangedEventArgs.NewValue == null
-            ? false
-            : true;
+        @this.BadgeVisibility = dependencyPropertyChangedEventArgs.NewValue != null;
     }
 
     /// <summary>
@@ -397,14 +423,32 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// Headers the property changes callback.
     /// </summary>
     /// <param name="dependencyObject">The dependency object.</param>
-    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="dependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
     private static void HeaderPropertyChangesCallback(AvaloniaObject dependencyObject,
         AvaloniaPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
-        if (!(dependencyObject is NotificationMessage @this))
+        if (dependencyObject is not NotificationMessage @this)
             throw new NullReferenceException("Dependency object is not of valid type " + nameof(NotificationMessage));
 
         @this.HeaderVisibility = dependencyPropertyChangedEventArgs.NewValue != null;
+    }
+
+    /// <summary>
+    /// Buttons the property changes callback.
+    /// </summary>
+    /// <param name="dependencyObject">The dependency object.</param>
+    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="dependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+    private static void ButtonsPropertyChangesCallback(AvaloniaObject dependencyObject, AvaloniaPropertyChangedEventArgs<ObservableCollection<object>> dependencyPropertyChangedEventArgs)
+    {
+        if (dependencyObject is not NotificationMessage @this)
+            throw new NullReferenceException("Dependency object is not of valid type " + nameof(NotificationMessage));
+
+        if (dependencyPropertyChangedEventArgs.NewValue.Value.Count > 0)
+        {
+            @this.ButtonsVisibility = true;
+        }
+
+        @this.ButtonsVisibility = false;
     }
 
     /// <summary>
@@ -412,6 +456,12 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </summary>
     public static readonly StyledProperty<bool> MessageVisibilityProperty =
         AvaloniaProperty.Register<NotificationMessage, bool>("MessageVisibility");
+
+    /// <summary>
+    /// The buttons visibility property.
+    /// </summary>
+    public static readonly StyledProperty<bool> ButtonsVisibilityProperty =
+        AvaloniaProperty.Register<NotificationMessage, bool>("ButtonsVisibilityProperty");
 
     /// <summary>
     /// The message property.
@@ -423,7 +473,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// Messages the property changes callback.
     /// </summary>
     /// <param name="dependencyObject">The dependency object.</param>
-    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+    /// <param name="dependencyPropertyChangedEventArgs">The <see cref="dependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
     private static void MessagePropertyChangesCallback(AvaloniaObject dependencyObject,
         AvaloniaPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
@@ -450,10 +500,27 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </summary>
     static NotificationMessage()
     {
-        AccentBrushProperty.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<IBrush>>(x => AccentBrushPropertyChangedCallback(x.Sender, x)));
-        BadgeTextProperty.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<string>>(x => BadgeTextPropertyChangedCallback(x.Sender, x)));
-        MessageProperty.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<string>>(x => MessagePropertyChangesCallback(x.Sender, x)));
-        HeaderProperty.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<string>>(x => HeaderPropertyChangesCallback(x.Sender, x)));
+        AccentBrushProperty.Changed.Subscribe(
+            new AnonymousObserver<AvaloniaPropertyChangedEventArgs<IBrush>>(x =>
+                AccentBrushPropertyChangedCallback(x.Sender, x)));
+
+        BadgeTextProperty.Changed.Subscribe(
+            new AnonymousObserver<AvaloniaPropertyChangedEventArgs<string>>(x =>
+                BadgeTextPropertyChangedCallback(x.Sender, x)));
+
+        MessageProperty.Changed.Subscribe(
+            new AnonymousObserver<AvaloniaPropertyChangedEventArgs<string>>(x =>
+                MessagePropertyChangesCallback(x.Sender, x)));
+
+        HeaderProperty.Changed.Subscribe(
+            new AnonymousObserver<AvaloniaPropertyChangedEventArgs<string>>(x =>
+                HeaderPropertyChangesCallback(x.Sender, x)));
+
+        ButtonsProperty.Changed.Subscribe(
+            new AnonymousObserver<AvaloniaPropertyChangedEventArgs<ObservableCollection<object>>>(x =>
+                ButtonsPropertyChangesCallback(x.Sender, x)));
+
+
         //TODO what is this
         // DefaultStyleKeyProperty.OverrideMetadata(typeof(NotificationMessage), new FrameworkPropertyMetadata(typeof(NotificationMessage)));
     }
@@ -462,6 +529,7 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// <summary>
     /// Initializes a new instance of the <see cref="NotificationMessage" /> class.
     /// </summary>
+    /// <param name="notificationMessageBuilder"></param>
     public NotificationMessage()
     {
         this.Buttons = new ObservableCollection<object>();

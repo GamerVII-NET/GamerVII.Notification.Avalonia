@@ -1,4 +1,4 @@
-﻿namespace Avalonia.Notification
+﻿namespace GamerVII.Notification.Avalonia
 {
     /// <summary>
     /// The notification message manager event arguments.

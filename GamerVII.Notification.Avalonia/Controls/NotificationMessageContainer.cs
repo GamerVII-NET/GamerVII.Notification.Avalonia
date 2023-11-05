@@ -1,10 +1,8 @@
-﻿using System.Runtime.CompilerServices;
-using Avalonia.Animation;
-using Avalonia.Collections;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Reactive;
 
-namespace Avalonia.Notification.Controls
+namespace GamerVII.Notification.Avalonia.Controls
 {
     /// <summary>
     /// The notification message container.

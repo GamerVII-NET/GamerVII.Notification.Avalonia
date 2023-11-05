@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 
-namespace Avalonia.Notification
+namespace GamerVII.Notification.Avalonia
 {
     /// <summary>
     /// The animation properties for a notification message or some

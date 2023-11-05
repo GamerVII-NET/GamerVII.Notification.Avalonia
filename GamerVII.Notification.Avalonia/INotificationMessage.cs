@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Avalonia.Media;
 
-namespace Avalonia.Notification
+namespace GamerVII.Notification.Avalonia
 {
     /// <summary>
     /// The notification message.
@@ -103,6 +103,14 @@ namespace Avalonia.Notification
         /// The message visibility.
         /// </value>
         bool MessageVisibility { get; set; }
+
+        /// <summary>
+        /// Gets or sets the buttons visibility.
+        /// </summary>
+        /// <value>
+        /// The buttons visibility.
+        /// </value>
+        bool ButtonsVisibility { get; set; }
 
         /// <summary>
         /// Gets or sets the content of the overlay.

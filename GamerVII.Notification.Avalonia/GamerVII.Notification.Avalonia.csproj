@@ -10,11 +10,12 @@
         <PackageLicenseUrl>https://github.com/AvaloniaCommunity/Avalonia.Notification/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/AvaloniaCommunity/Avalonia.Notification</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageId>Notification.Avalonia</PackageId>
+        <PackageId>GamerVII.Notification.Avalonia</PackageId>
         <Title>Notification.Avalonia</Title>
         <Authors>Lary</Authors>
-        <RootNamespace>Avalonia.Notification</RootNamespace>
+        <RootNamespace>GamerVII.Notification.Avalonia</RootNamespace>
         <PackageVersion>2.0.1</PackageVersion>
+        <AssemblyName>GamerVII.Notification.Avalonia</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
         <AvaloniaResource Include="**\*.xaml">
@@ -24,8 +25,10 @@
         <AvaloniaResource Update="Views\MsBoxInputWindow.xaml">
             <SubType>Designer</SubType>
         </AvaloniaResource>
+        <AvaloniaResource Include="Resources\close.svg" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.5" />
+        <PackageReference Include="Avalonia" Version="11.0.0" />
+        <PackageReference Include="Avalonia.Svg.Skia" Version="11.0.0.3" />
     </ItemGroup>
 </Project>

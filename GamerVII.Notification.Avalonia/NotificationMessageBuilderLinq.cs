@@ -3,7 +3,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable RedundantEmptySwitchSection
 
-namespace Avalonia.Notification;
+namespace GamerVII.Notification.Avalonia;
 
 /// <summary>
 /// The notification message builder LINQ helper.
@@ -142,6 +142,21 @@ public static class NotificationMessageBuilderLinq
         return builder;
     }
 
+
+
+    public static NotificationMessageBuilder CreateMessage(this INotificationMessageManager manager, bool animations, string background, string title, string content)
+    {
+        var builder = NotificationMessageBuilder.CreateMessage();
+        builder.Manager = manager;
+        builder.Message = manager.Factory.GetMessage();
+        builder.Animates(animations);
+        builder.HasHeader(title);
+        builder.Background(background);
+        builder.HasMessage(content);
+
+        return builder;
+    }
+
     /// <summary>
     /// Marks next button to be dismiss.
     /// This button will dismiss the notification message when clicked.
@@ -230,7 +245,7 @@ public static class NotificationMessageBuilderLinq
     /// <param name="builder">The builder.</param>
     /// <param name="callback">The callback.</param>
     /// <returns>
-    /// Returns the action that will call manager dismiss for notification 
+    /// Returns the action that will call manager dismiss for notification
     /// message builder when called and then call the callback action.
     /// </returns>
     private static Action<INotificationMessage> DismissBefore(
@@ -250,7 +265,7 @@ public static class NotificationMessageBuilderLinq
     /// <param name="builder">The builder.</param>
     /// <param name="callback">The callback.</param>
     /// <returns>
-    /// Returns the action that will call manager dismiss for notification 
+    /// Returns the action that will call manager dismiss for notification
     /// message in builder when button is clicked and then call the callback action.
     /// </returns>
     private static Action<INotificationMessageButton> DismissBefore(

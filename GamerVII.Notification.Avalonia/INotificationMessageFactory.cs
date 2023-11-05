@@ -1,4 +1,4 @@
-namespace Avalonia.Notification;
+namespace GamerVII.Notification.Avalonia;
 
 /// <summary>
 /// The notification message factory.
@@ -8,6 +8,7 @@ public interface INotificationMessageFactory
     /// <summary>
     /// Gets the message.
     /// </summary>
+    /// <param name="notificationMessageBuilder"></param>
     /// <returns>Returns new instance of notification message.</returns>
     INotificationMessage GetMessage();
 

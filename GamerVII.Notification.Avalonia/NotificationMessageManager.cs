@@ -1,6 +1,7 @@
+using Avalonia;
 using Avalonia.Animation;
 
-namespace Avalonia.Notification;
+namespace GamerVII.Notification.Avalonia;
 
 /// <summary>
 /// The notification message manager.
@@ -61,7 +62,7 @@ public class NotificationMessageManager : AvaloniaObject, INotificationMessageMa
     /// <param name="message">The message.</param>
     public void Dismiss(INotificationMessage message)
     {
-        if (message == null || !this.queuedMessages.Contains(message))
+        if (!this.queuedMessages.Contains(message))
             return;
 
         this.queuedMessages.Remove(message);
@@ -70,8 +71,7 @@ public class NotificationMessageManager : AvaloniaObject, INotificationMessageMa
         {
             // var animation = animatableMessage.AnimationOut;
             if (
-                animatableMessage.Animates &&
-                animatableMessage.AnimatableElement != null)
+                animatableMessage.Animates)
             {
                 animatableMessage.AnimatableElement.DismissAnimation = true;
                 Task.Delay(500).ContinueWith(

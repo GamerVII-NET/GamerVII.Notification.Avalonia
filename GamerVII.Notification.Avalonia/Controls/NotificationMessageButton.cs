@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 
 
-namespace Avalonia.Notification.Controls
+namespace GamerVII.Notification.Avalonia.Controls
 {
     /// <summary>
     /// The notification message button.
@@ -41,7 +41,7 @@ namespace Avalonia.Notification.Controls
         /// </summary>
         static NotificationMessageButton()
         {
-            // TODO 
+            // TODO
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(NotificationMessageButton), new FrameworkPropertyMetadata(typeof(NotificationMessageButton)));
         }
 

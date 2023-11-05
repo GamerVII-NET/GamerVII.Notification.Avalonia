@@ -1,6 +1,6 @@
-using Avalonia.Notification.Controls;
+using GamerVII.Notification.Avalonia.Controls;
 
-namespace Avalonia.Notification;
+namespace GamerVII.Notification.Avalonia;
 
 /// <summary>
 /// The notification message factory.
@@ -11,6 +11,7 @@ public class NotificationMessageFactory : INotificationMessageFactory
     /// <summary>
     /// Gets the message.
     /// </summary>
+    /// <param name="notificationMessageBuilder"></param>
     /// <returns>
     /// Returns new instance of notification message.
     /// </returns>

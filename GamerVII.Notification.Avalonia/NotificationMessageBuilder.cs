@@ -1,6 +1,6 @@
 ﻿using Avalonia.Media;
 
-namespace Avalonia.Notification;
+namespace GamerVII.Notification.Avalonia;
 
 /// <summary>
 /// The notification message builder.

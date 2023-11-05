@@ -1,13 +1,7 @@
-# Notification.Avalonia
+# GamerVII.Notification.Avalonia
 
 ---
-To start you should install NuGet package 
->   Install-Package Notification.Avalonia
 
-[![nuget](https://img.shields.io/badge/nuget-notification-blue)](https://www.nuget.org/packages/Notification.Avalonia/)
-or download https://www.nuget.org/packages/Notification.Avalonia/ repo.
-
----
 ![image](https://github.com/GamerVII-NET/GamerVII.Notification.Avalonia/assets/111225722/a99d814f-a8c8-46d9-93cd-99fd066695bc)
 ---
 
@@ -18,7 +12,7 @@ For use:
 ```xml
 <Application.Styles>
         ...
-    <StyleInclude Source="avares://Notification.Avalonia/Themes/Generic.xaml" />
+    <StyleInclude Source="avares://GamerVII.Notification.Avalonia/Themes/Generic.xaml" />
 </Application.Styles>
 
 ```
@@ -40,16 +34,22 @@ For use:
 4. Run notification
 
 ```cs
-            this.Manager
-                .CreateMessage()
-                .Accent("#1751C3")
-                .Animates(true)
-                .Background("#333")
-                .HasBadge("Info")
-                .HasMessage(
-                    "Update will be installed on next application restart. This message will be dismissed after 5 seconds.")
-                .Dismiss().WithButton("Update now", button => { })
-                .Dismiss().WithButton("Release notes", button => { })
-                .Dismiss().WithDelay(TimeSpan.FromSeconds(5))
-                .Queue();
+this.Manager
+    .CreateMessage()
+    .Accent("#1751C3")
+    .Animates(true)
+    .Background("#333")
+    .HasBadge("Info")
+    .HasMessage("Update will be installed on next application restart. This message will be dismissed after 5 seconds.")
+    .Dismiss().WithDelay(TimeSpan.FromSeconds(5))
+    .Queue();
+```
+
+or
+
+```cs
+this.Manager
+     .CreateMessage(true, "#D03E3E", "Ошибка", "Укажите наименование клиента" )
+     .Dismiss().WithDelay(TimeSpan.FromSeconds(2))
+     .Queue();
 ```

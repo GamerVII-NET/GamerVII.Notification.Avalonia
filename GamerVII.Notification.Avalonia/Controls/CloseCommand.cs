@@ -3,18 +3,11 @@
 using System;
 using System.Windows.Input;
 
-public class CloseCommand : ICommand
+public class CloseCommand(Action<object> execute, Func<object, bool>? canExecute = null) : ICommand
 {
-    private readonly Action<object> execute;
-    private readonly Func<object, bool> canExecute;
+    private readonly Action<object> execute = execute ?? throw new ArgumentNullException(nameof(execute));
 
-    public CloseCommand(Action<object> execute, Func<object, bool> canExecute = null)
-    {
-        this.execute = execute ?? throw new ArgumentNullException("execute");
-        this.canExecute = canExecute;
-    }
-
-    public event EventHandler CanExecuteChanged;
+    public event EventHandler? CanExecuteChanged;
 
     public bool CanExecute(object parameter)
     {

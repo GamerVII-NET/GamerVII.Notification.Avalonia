@@ -9,6 +9,6 @@
 
     <Application.Styles>
         <FluentTheme  />
-        <StyleInclude Source="avares://Notification.Avalonia/Themes/Generic.xaml" />
+        <StyleInclude Source="avares://GamerVII.Notification.Avalonia/Themes/Generic.xaml" />
     </Application.Styles>
 </Application>

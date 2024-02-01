@@ -102,7 +102,12 @@ namespace GamerVII.Notification.Avalonia.Controls
                 throw new InvalidOperationException(
                     "Can't use both ItemsSource and Items collection at the same time.");*/
 
-            (this.Items).Add(args.Message);
+            if (args.Message is NotificationMessage notificationMessage && notificationMessage.Parent != null)
+            {
+                return;
+            }
+
+            (Items).Add(args.Message);
 
             if (args.Message is INotificationAnimation animatableMessage)
             {

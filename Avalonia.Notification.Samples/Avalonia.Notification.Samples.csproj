@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
         <TrimMode>copyused</TrimMode>
@@ -28,6 +28,6 @@
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.5" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Notification.Avalonia\Notification.Avalonia.csproj" />
+      <ProjectReference Include="..\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia.csproj" />
     </ItemGroup>
 </Project>

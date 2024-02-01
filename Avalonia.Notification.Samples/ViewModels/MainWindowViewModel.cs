@@ -5,12 +5,13 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
+using GamerVII.Notification.Avalonia;
 
 namespace Avalonia.Notification.Samples.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        
+
         /// <summary>
         /// Gets the notification message manager.
         /// </summary>
@@ -18,7 +19,7 @@ namespace Avalonia.Notification.Samples.ViewModels
         /// The notification message manager.
         /// </value>
         public INotificationMessageManager Manager { get; } = new NotificationMessageManager();
-        
+
         public void  ButtonBaseErrorOnClick()
         {
             this.Manager

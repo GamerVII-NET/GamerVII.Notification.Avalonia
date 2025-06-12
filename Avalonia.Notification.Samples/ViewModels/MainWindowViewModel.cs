@@ -85,6 +85,24 @@ namespace Avalonia.Notification.Samples.ViewModels
                 .Dismiss().WithDelay(TimeSpan.FromSeconds(5))
                 .Queue();
         }
+
+        public void ButtonBaseWithCloseButtonsOnClick()
+        {
+            this.Manager
+                .CreateMessage()
+                .Accent("#1751C3")
+                .Animates(true)
+                .Background("#333")
+                .HasBadge("Info")
+                .HasMessage(
+                    "Update will be installed on next application restart. This message will be dismissed after 5 seconds.")
+                .Dismiss().WithButton("Update now", button => { })
+                .Dismiss().WithButton("Release notes", button => { })
+                .WithButtonsVisibility(true)
+                .WithCloseButtonVisible(true)
+                .Dismiss().WithDelay(TimeSpan.FromSeconds(5))
+                .Queue();
+        }
         public string Greeting => "Welcome to Avalonia!";
     }
 }

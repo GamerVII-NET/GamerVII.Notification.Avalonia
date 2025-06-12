@@ -28,7 +28,7 @@
         <AvaloniaResource Include="Resources\close.svg" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.2.2" />
-        <PackageReference Include="Avalonia.Svg.Skia" Version="11.2.0.2" />
+        <PackageReference Include="Avalonia" Version="11.3.1" />
+        <PackageReference Include="Avalonia.Svg.Skia" Version="11.3.0" />
     </ItemGroup>
 </Project>

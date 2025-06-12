@@ -1,4 +1,4 @@
-﻿using Avalonia.Media;
+using Avalonia.Media;
 
 namespace GamerVII.Notification.Avalonia;
 
@@ -222,6 +222,24 @@ public class NotificationMessageBuilder
         Task.Delay(delay).ContinueWith(
             context => action(this.Message),
             TaskScheduler.FromCurrentSynchronizationContext());
+    }
+
+    /// <summary>
+    /// Sets the buttons visibility.
+    /// </summary>
+    /// <param name="isVisible">If set to <c>true</c> buttons are visible.</param>
+    public void SetButtonsVisibility(bool isVisible)
+    {
+        this.Message.ButtonsVisibility = isVisible;
+    }
+
+    /// <summary>
+    /// Sets the close button visibility.
+    /// </summary>
+    /// <param name="isVisible">If set to <c>true</c> close button are visible.</param>
+    public void SetCloseButtonVisible(bool isVisible)
+    {
+        this.Message.CloseButtonVisible = isVisible;
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -210,6 +210,18 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     {
         get => GetValue(ButtonsVisibilityProperty);
         set => SetValue(ButtonsVisibilityProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the the close button visibility
+    /// </summary>
+    /// <value>
+    /// The close button visibility
+    /// </value>
+    public bool CloseButtonVisible
+    {
+        get => GetValue(CloseButtonVisibleProperty);
+        set => SetValue(CloseButtonVisibleProperty, value);
     }
 
     /// <summary>
@@ -462,6 +474,12 @@ public class NotificationMessage : TemplatedControl, INotificationMessage, INoti
     /// </summary>
     public static readonly StyledProperty<bool> ButtonsVisibilityProperty =
         AvaloniaProperty.Register<NotificationMessage, bool>("ButtonsVisibilityProperty");
+
+    /// <summary>
+    /// The close button visibility property
+    /// </summary>
+    public static readonly StyledProperty<bool> CloseButtonVisibleProperty =
+        AvaloniaProperty.Register<NotificationMessage, bool>(nameof(CloseButtonVisibleProperty), true);
 
     /// <summary>
     /// The message property.

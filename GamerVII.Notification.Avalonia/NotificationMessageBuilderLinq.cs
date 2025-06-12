@@ -1,4 +1,4 @@
-﻿using Avalonia.Media;
+using Avalonia.Media;
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable RedundantEmptySwitchSection
@@ -377,6 +377,32 @@ public static class NotificationMessageBuilderLinq
     {
         builder.SetAnimates(animates);
 
+        return builder;
+    }
+
+    /// <summary>
+    /// Sets the button's visibility.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <param name="isVisible">Bool of button's visibility.</param>
+    public static NotificationMessageBuilder WithButtonsVisibility(
+    this NotificationMessageBuilder builder,
+    bool isVisible)
+    {
+        builder.SetButtonsVisibility(isVisible);
+        return builder;
+    }
+
+    /// <summary>
+    /// Sets the close button's visibility.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <param name="isVisible">Bool of close button's visibility.</param>
+    public static NotificationMessageBuilder WithCloseButtonVisible(
+        this NotificationMessageBuilder builder,
+        bool isVisible)
+    {
+        builder.SetCloseButtonVisible(isVisible);
         return builder;
     }
 }

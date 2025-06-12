@@ -1,4 +1,4 @@
-﻿<Styles
+<Styles
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:GamerVII.Notification.Avalonia.Controls"
@@ -16,7 +16,34 @@
 
                 <cc:NotificationMessage Header="Заголовок"
                                         Background="#151515"
-                                        Message="Сообщение" />
+                                        Message="Сообщение"
+                                        />
+                <cc:NotificationMessage Header="Заголовок"
+                                        Background="#151515"
+                                        Message="Сообщение без возможности закрыть"
+                                        CloseButtonVisible="False"
+                                        />
+                <cc:NotificationMessage Header="Заголовок"
+                                        Background="#151515"
+                                        Message="Сообщение с кнопками"
+                                        />
+                <cc:NotificationMessage BadgeText="Warning"
+                                        AccentBrush="#60000000"
+                                        Header="Тест2"
+                                        Background="#602020"
+                                        Message="Тестовое сообщение с кнопкой"
+                                        ButtonsVisibility="True">
+                    <cc:NotificationMessage.Buttons>
+                        <cc:NotificationMessageButton
+                                Content="Нажми меня"
+                                IsEnabled="True"
+                                />
+                        <cc:NotificationMessageButton
+                                Content="Неактивна"
+                                IsEnabled="False"
+                                />
+                    </cc:NotificationMessage.Buttons>
+                </cc:NotificationMessage>
             </cc:NotificationMessageContainer>
         </Border>
     </Design.PreviewWith>
@@ -84,8 +111,9 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="#882F2F2F"
                         Padding="10"
+                        Margin="0,0,0,2"
                         MaxWidth="450"
-                        BorderThickness="0,0,0,1"
+                        BorderThickness="0,0,0,0"
                         UseLayoutRounding="True">
                         <!--  Outer Grid  -->
                         <Grid x:Name="outerGrid">
@@ -95,7 +123,8 @@
                                 <Style Selector="cc|NotificationMessageButton">
                                     <Setter Property="Foreground" Value="#EAEAEA" />
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="Padding" Value="12,2" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Setter Property="Padding" Value="12,5" />
                                     <Setter Property="Background"
                                             Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type cc:NotificationMessage}}, Path=ButtonAccentBrush}" />
                                     <Setter Property="Template">
@@ -105,8 +134,10 @@
                                                     <Border
                                                         x:Name="backgroundBorder"
                                                         Background="{TemplateBinding Background}"
+                                                        Opacity=".8"
                                                         BorderBrush="{TemplateBinding Background}"
-                                                        BorderThickness="{TemplateBinding BorderThickness}" />
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="5"/>
                                                     <Border
                                                         x:Name="backgroundOverlay"
                                                         BorderThickness="0"
@@ -125,17 +156,15 @@
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
                                 </Style>
                                 <Style Selector="cc|NotificationMessageButton:pointerover /template/ Border">
-                                    <Setter Property="Opacity" Value="0.5" />
+                                    <Setter Property="Opacity" Value="1.0" />
                                 </Style>
                                 <Style Selector="cc|NotificationMessageButton:pressed  /template/ Border">
-
-                                    <Setter Property="Opacity" Value="0.8" />
+                                    <Setter Property="RenderTransform" Value="scale(.98)" />
                                 </Style>
                                 <Style Selector="cc|NotificationMessageButton:disabled">
-                                    <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}" />
+                                    <Setter Property="Opacity" Value=".5" />
                                 </Style>
                                 <!--  Accent Badge Style  -->
                                 <Style
@@ -299,7 +328,8 @@
                                     Command="{TemplateBinding CloseCommand}"
                                     CommandParameter="{TemplateBinding }"
                                     Classes="CloseButtonStyle"
-                                    VerticalAlignment="Top">
+                                    VerticalAlignment="Top"
+                                    IsVisible="{TemplateBinding CloseButtonVisible}">
                                 <Svg Path="../Resources/close.svg"></Svg>
                             </Button>
                         </Grid>

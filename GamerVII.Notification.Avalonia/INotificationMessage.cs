@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using Avalonia.Media;
 
 namespace GamerVII.Notification.Avalonia
@@ -111,6 +111,14 @@ namespace GamerVII.Notification.Avalonia
         /// The buttons visibility.
         /// </value>
         bool ButtonsVisibility { get; set; }
+
+        /// <summary>
+        /// Gets or sets the close button visibility
+        /// </summary>
+        /// <value>
+        /// The close button visibility
+        /// </value>
+        bool CloseButtonVisible { get; set; }
 
         /// <summary>
         /// Gets or sets the content of the overlay.

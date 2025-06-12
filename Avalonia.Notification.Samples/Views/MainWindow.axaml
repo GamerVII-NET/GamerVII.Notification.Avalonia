@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:GamerVII.Notification.Avalonia.Controls;assembly=GamerVII.Notification.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.Notification.Samples.Views.MainWindow"
-        Icon="/Assets/logo.ico"
+        Icon="/Assets/avalonia-logo.ico"
         Title="Notification.Avalonia.Samples">
 
     <Design.DataContext>
@@ -68,6 +68,15 @@
                 Background="#1751C3"
                 Command="{Binding ButtonBaseInfoDelayOnClick}"
                 Content="Animated info message with delayed dismiss (5s)" />
+            
+            <Button
+                Margin="8"
+                Padding="12,8"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Background="#1751C3"
+                Command="{Binding ButtonBaseWithCloseButtonsOnClick}"
+                Content="Animated info message with close buttons" />
 
 
         </StackPanel>
